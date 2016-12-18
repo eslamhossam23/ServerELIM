@@ -13,12 +13,8 @@ public class Main {
             serverSocket = new ServerSocket(3000);
             while (true){
                 Socket socket = serverSocket.accept();
-                InputStream inputStream = socket.getInputStream();
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = bufferedReader.readLine())!= null){
-                    System.out.println(line);
-                }
+                Thread thread = new ServerThread(socket);
+                thread.start();
             }
         } catch (IOException e) {
             e.printStackTrace();
