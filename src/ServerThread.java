@@ -9,6 +9,7 @@ import java.net.Socket;
  */
 public class ServerThread extends Thread {
     private Socket socket;
+    private final static String SEPARATOR = "-";
 
     public ServerThread(Socket socket) {
         this.socket = socket;
@@ -23,8 +24,15 @@ public class ServerThread extends Thread {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             while ((line = bufferedReader.readLine())!= null){
-                System.out.println(socket.getInetAddress().toString());
-                System.out.println(line);
+                if(line.contains("-")){
+                    String[] message = line.split(SEPARATOR);
+                    System.out.println("Time " + message[0]);
+                    System.out.println("Latitude " + message[1]);
+                    System.out.println("Longitude " + message[2]);
+                    System.out.println("Decibels " + message[3]);
+                }else{
+                    System.out.println(line);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
