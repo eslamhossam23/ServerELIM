@@ -1,0 +1,17 @@
+/build/
+
+# intellij
+.idea/
+
+# Eclipse files
+.project
+.classpath
+.settings
+
+#Netbeans files
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
