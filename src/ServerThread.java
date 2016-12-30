@@ -1,4 +1,5 @@
 
+import com.eslamhossam23bichoymessiha.projetelim.DataOfLastDay;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,7 +53,7 @@ public class ServerThread extends Thread {
                     dataOfLastDay.setMinimumdB(dao.getminimumdB());
 
                     sendObjectToClient(dataOfLastDay);
-//                    System.out.println(dataOfLastDay);
+                    System.out.println(dataOfLastDay);
 //                    System.out.println("data sent to client");
                 } else {
                     System.out.println(line);
