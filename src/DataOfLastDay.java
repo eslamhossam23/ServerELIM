@@ -1,11 +1,7 @@
 
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -18,49 +14,60 @@ import java.util.HashMap;
  *
  * @author bichoymessiha
  */
-public class DataOfLastDay implements Serializable{
-
-    private final long MILLISINDAY = 86400000;
-    private Connection connection;
+public class DataOfLastDay implements Serializable {
 
     private HashMap<Long, Float> chartTimedB = new HashMap<>();
     private ArrayList<String[]> mapLocationdB = new ArrayList<>();
     private float minimumdB;
     private float maximumdB;
-    
-    public DataOfLastDay(Connection connection) throws SQLException {
-        this.connection = connection;
-        filterData(getLastDayData());
+
+    public DataOfLastDay() {
     }
 
-    public ResultSet getLastDayData() throws SQLException {
-        Statement statement = connection.createStatement();
-        
-        // Minimum dB of the day
-        minimumdB = statement.executeQuery("SELECT min(dB) FROM elim.data;").getFloat("dB");
-        // Maximum dB of the day
-        maximumdB = statement.executeQuery("SELECT max(dB) FROM elim.data;").getFloat("dB");
-        
-        LocalDate localDate = LocalDate.now();
-        ZoneId zoneId = ZoneId.systemDefault();
-        long epochOfTodayMillis = localDate.atStartOfDay(zoneId).toEpochSecond() * 1000;
-
-        return statement.executeQuery("SELECT * FROM elim.data where Time >" + epochOfTodayMillis
-                + "and Time < " + epochOfTodayMillis + MILLISINDAY);
-    }
-
-    public void filterData(ResultSet resultSet) throws SQLException {
-        while(resultSet.next()){
-            chartTimedB.put(resultSet.getLong("Time"), resultSet.getFloat("dB"));
-            String[] locationdB = {resultSet.getString("Longitude"),resultSet.getString("Latitude"),resultSet.getString("dB")};
-            mapLocationdB.add(locationdB);
-        }
-    }
-
-    
     public HashMap<Long, Float> getChartTimedB() {
         return chartTimedB;
     }
-    
-    
+
+    public ArrayList<String[]> getMapLocationdB() {
+        return mapLocationdB;
+    }
+
+    public float getMinimumdB() {
+        return minimumdB;
+    }
+
+    public float getMaximumdB() {
+        return maximumdB;
+    }
+
+    public void setChartTimedB(HashMap<Long, Float> chartTimedB) {
+        this.chartTimedB = chartTimedB;
+    }
+
+    public void setMapLocationdB(ArrayList<String[]> mapLocationdB) {
+        this.mapLocationdB = mapLocationdB;
+    }
+
+    public void setMinimumdB(float minimumdB) {
+        this.minimumdB = minimumdB;
+    }
+
+    public void setMaximumdB(float maximumdB) {
+        this.maximumdB = maximumdB;
+    }
+
+    @Override
+    public String toString() {
+        String str = "chartTimedB=" + chartTimedB
+                + ", minimumdB=" + minimumdB
+                + ", maximumdB=" + maximumdB
+                + ", mapLocationdB={";
+        for (String[] row : mapLocationdB) {
+            str += row[0] + " , ";
+            str += row[1] + " , ";
+            str += row[2] + " / ";
+        }
+        str += '}';
+        return str;
+    }
 }
