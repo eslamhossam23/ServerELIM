@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Havoc on 0018-18-12-2016.
@@ -17,10 +19,16 @@ public class ServerThread extends Thread {
     private final Socket socket;
     private final Dao dao;
     private final static String SEPARATOR = "-";
+    private ObjectOutputStream serverOutputStream = null;
 
     public ServerThread(Socket socket, Dao dao) {
         this.socket = socket;
         this.dao = dao;
+        try {
+            serverOutputStream = new ObjectOutputStream(socket.getOutputStream());
+        } catch (IOException ex) {
+            Logger.getLogger(ServerThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -75,7 +83,6 @@ public class ServerThread extends Thread {
     }
     
     public void sendObjectToClient(Object object) throws IOException {
-        ObjectOutputStream serverOutputStream = new ObjectOutputStream(socket.getOutputStream());
         serverOutputStream.writeObject((DataOfLastDay) object);
     }
     
