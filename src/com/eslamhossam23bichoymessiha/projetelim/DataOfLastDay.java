@@ -15,19 +15,20 @@ import java.util.HashMap;
  */
 public class DataOfLastDay implements Serializable {
 
-    private HashMap<Long, Float> chartTimedB = new HashMap<>();
-    private ArrayList<String[]> mapLocationdB = new ArrayList<>();
+//    private HashMap<Long, Float> chartTimedB = new HashMap<>();
+    private ArrayList<TimedBCouple> chartTimedB = new ArrayList<>();
+    private ArrayList<LocationdBTriple> mapLocationdB = new ArrayList<>();
     private float minimumdB;
     private float maximumdB;
 
     public DataOfLastDay() {
     }
 
-    public HashMap<Long, Float> getChartTimedB() {
+    public ArrayList<TimedBCouple> getChartTimedB() {
         return chartTimedB;
     }
 
-    public ArrayList<String[]> getMapLocationdB() {
+    public ArrayList<LocationdBTriple> getMapLocationdB() {
         return mapLocationdB;
     }
 
@@ -39,11 +40,11 @@ public class DataOfLastDay implements Serializable {
         return maximumdB;
     }
 
-    public void setChartTimedB(HashMap<Long, Float> chartTimedB) {
+    public void setChartTimedB(ArrayList<TimedBCouple> chartTimedB) {
         this.chartTimedB = chartTimedB;
     }
 
-    public void setMapLocationdB(ArrayList<String[]> mapLocationdB) {
+    public void setMapLocationdB(ArrayList<LocationdBTriple> mapLocationdB) {
         this.mapLocationdB = mapLocationdB;
     }
 
@@ -60,13 +61,7 @@ public class DataOfLastDay implements Serializable {
         String str = "chartTimedB=" + chartTimedB
                 + ", minimumdB=" + minimumdB
                 + ", maximumdB=" + maximumdB
-                + ", mapLocationdB={";
-        for (String[] row : mapLocationdB) {
-            str += row[0] + " , ";
-            str += row[1] + " , ";
-            str += row[2] + " / ";
-        }
-        str += '}';
+                + ", mapLocationdB={" + mapLocationdB +"}";
         return str;
     }
 }

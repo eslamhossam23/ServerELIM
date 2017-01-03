@@ -1,5 +1,7 @@
 
 import com.eslamhossam23bichoymessiha.projetelim.DataOfLastDay;
+import com.eslamhossam23bichoymessiha.projetelim.LocationdBTriple;
+import com.eslamhossam23bichoymessiha.projetelim.TimedBCouple;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -76,9 +78,8 @@ public class ServerThread extends Thread {
 
     public void filterData(DataOfLastDay dataOfLastDay,ResultSet resultSet) throws SQLException {
         while (resultSet.next()) {
-            dataOfLastDay.getChartTimedB().put(resultSet.getLong("Time"), resultSet.getFloat("dB"));
-            String[] locationdB = {resultSet.getString("Longitude"), resultSet.getString("Latitude"), resultSet.getString("dB")};
-            dataOfLastDay.getMapLocationdB().add(locationdB);
+            dataOfLastDay.getChartTimedB().add(new TimedBCouple(resultSet.getLong("Time"), resultSet.getFloat("dB")));
+            dataOfLastDay.getMapLocationdB().add(new LocationdBTriple(resultSet.getFloat("Latitude"), resultSet.getFloat("Longitude"), resultSet.getFloat("dB")));
         }
     }
     
