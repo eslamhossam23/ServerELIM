@@ -15,9 +15,9 @@ import java.util.HashMap;
  */
 public class DataOfLastDay implements Serializable {
 
-//    private HashMap<Long, Float> chartTimedB = new HashMap<>();
     private ArrayList<TimedBCouple> chartTimedB = new ArrayList<>();
     private ArrayList<LocationdBTriple> mapLocationdB = new ArrayList<>();
+    private ArrayList<Cluster> kmeansClusters;
     private float minimumdB;
     private float maximumdB;
 
@@ -56,12 +56,21 @@ public class DataOfLastDay implements Serializable {
         this.maximumdB = maximumdB;
     }
 
+    public ArrayList<Cluster> getKmeansClusters() {
+        return kmeansClusters;
+    }
+
+    public void setKmeansClusters(ArrayList<Cluster> kmeansClusters) {
+        this.kmeansClusters = kmeansClusters;
+    }
+
     @Override
     public String toString() {
         String str = "chartTimedB=" + chartTimedB
                 + ", minimumdB=" + minimumdB
                 + ", maximumdB=" + maximumdB
-                + ", mapLocationdB={" + mapLocationdB +"}";
+                + ", mapLocationdB={" + mapLocationdB
+                + ", clusters={" + kmeansClusters + "}";
         return str;
     }
 }
